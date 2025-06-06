@@ -1,11 +1,21 @@
 const chatBox = document.getElementById("chat-box");
 const messageInput = document.getElementById("messageInput");
+let userName = "";
+
+function saveUserName() {
+  const input = document.getElementById("userNameInput").value.trim();
+  if (input === "") return alert("Please enter a name");
+
+  userName = input;
+  document.getElementById("namePopup").style.display = "none";
+}
 
 function sendMessage() {
-  const text = messageInput.value;
-  if (text.trim() === "") return;
+  const text = messageInput.value.trim();
+  if (text === "") return;
 
   db.collection("messages").add({
+    name: userName,
     text: text,
     timestamp: firebase.firestore.FieldValue.serverTimestamp()
   });
@@ -20,62 +30,9 @@ db.collection("messages")
     snapshot.forEach((doc) => {
       const msg = doc.data();
       const div = document.createElement("div");
-      div.textContent = msg.text;
+      div.innerHTML = `<strong>${msg.name || "Anonymous"}:</strong> ${msg.text}`;
       div.className = "bg-gray-700 p-2 rounded";
       chatBox.appendChild(div);
     });
     chatBox.scrollTop = chatBox.scrollHeight;
   });
-
-  let confirmationResult;
-
-window.onload = () => {
-  firebase.auth().onAuthStateChanged((user) => {
-    if (user) {
-      document.getElementById("login-section").style.display = "none";
-      document.getElementById("chat-box").style.display = "block";
-    } else {
-      document.getElementById("login-section").style.display = "block";
-      document.getElementById("chat-box").style.display = "none";
-    }
-  });
-
-  window.recaptchaVerifier = new firebase.auth.RecaptchaVerifier('recaptcha-container', {
-    size: 'normal',
-    callback: () => console.log("reCAPTCHA verified"),
-  });
-};
-
-function sendOTP() {
-  const phoneNumber = document.getElementById("phoneNumber").value;
-
-  firebase.auth().signInWithPhoneNumber(phoneNumber, window.recaptchaVerifier)
-    .then((result) => {
-      confirmationResult = result;
-      alert("OTP sent!");
-    })
-    .catch((error) => {
-      console.error(error);
-      alert(error.message);
-    });
-}
-
-function verifyOTP() {
-  const code = document.getElementById("otpCode").value;
-
-  confirmationResult.confirm(code)
-    .then((result) => {
-      const user = result.user;
-      alert("Login successful!");
-    })
-    .catch((error) => {
-      console.error(error);
-      alert("Invalid OTP");
-    });
-}
-
-function logout() {
-  firebase.auth().signOut().then(() => {
-    alert("Logged out!");
-  });
-}
