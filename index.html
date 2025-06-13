@@ -1,15 +1,79 @@
 <!DOCTYPE html>
+<html lang="en" class="bg-pink-50 text-gray-800">
+<head>
+  <meta charset="UTF-8" />
+  <title>My Cute 3D Model</title>
+  <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+</head>
+<body class="flex flex-col items-center justify-center min-h-screen p-4">
+
+<nav class="bg-gray-200 dark:bg-gray-800 py-4 px-6 fixed w-full top-0 z-50">
+  <div class="flex items-center justify-between">
+    <div class="flex items-center space-x-4 text-lg font-medium">
+      <a href="https://beastcut.github.io/Rohit-Unfiltered/" class="text-black dark:text-white hover:text-blue-400 transition-colors duration-300 border rounded-lg p-2 shadow hover:shadow-lg transition text-black-800" style="cursor: pointer;" >← BACK</a>
+    </div>
+      <h1 class="text-2xl font-bold mb-4 text-white items-center">Methane</h1>
+</nav>
+<h1 class="text-6xl font-bold mb-4 text-pink-600 items-center">3D-Model</h1>
+    <h1 class="text-2x1 font-bold mb-4 text-pink-600">🟡Yelow - Carbon</h1>
+      <h1 class="text-2x1 font-bold mb-4 text-pink-600">🟢Green - Hydrogen</h1>
+  <model-viewer
+    id="methane"
+    src="https://beastcut.github.io/post/methane.glb"
+    camera-controls
+    auto-rotate
+    shadow-intensity="1"
+    class="w-full max-w-xl h-full aspect-square rounded-2xl border-8 border-blue-300 shadow-2xl"
+  ></model-viewer>
+
+  <p class="mt-4 text-lg text-pink-700">
+    Use your mouse to rotate model✨
+  </p>
+
+  <footer class="mt-8 text-sm text-gray-500">
+ made by - satyam patel
+  </footer>
+
+  <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>3D Model Viewer</title>
+  <title>No Right Click, No Copy</title>
   <style>
-    body { margin: 0; overflow: hidden; }
-    canvas { display: block; }
+    /* Optional: prevent text selection */
+    body {
+      -webkit-user-select: none; /* Chrome, Safari */
+      -moz-user-select: none;    /* Firefox */
+      -ms-user-select: none;     /* IE10+ */
+      user-select: none;         /* Standard */
+    }
   </style>
 </head>
 <body>
-  <script type="module" src="main.js"></script>
+  <h1>Protected Page</h1>
+  <p>You cannot right-click or copy text/images from this page.</p>
+  <img src="https://via.placeholder.com/200" alt="Example Image">
+
+  <script>
+    // Disable right click
+    document.addEventListener('contextmenu', function(e) {
+      e.preventDefault();
+    });
+
+    // Disable copy shortcut and selection copy
+    document.addEventListener('copy', function(e) {
+      e.preventDefault();
+    });
+
+    // Extra: prevent drag for images
+    document.addEventListener('dragstart', function(e) {
+      e.preventDefault();
+    });
+  </script>
+</body>
+</html>
+
 </body>
 </html>
